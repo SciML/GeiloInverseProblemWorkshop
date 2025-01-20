@@ -524,6 +524,12 @@ bboparamest_sol = solve(paramest_prob, BBO_adaptive_de_rand_1_bin_radiuslimited(
 # ╔═╡ b30eb1b1-b355-4f3e-980a-dd98b2d9d1d4
 bboparamest_sol.u
 
+# ╔═╡ 764b48c6-8427-4e1d-8ec7-59126a020e71
+begin
+	plot5 = plot(lotka_prediction(bboparamest_sol.u, saveat = ()))
+	scatter!(plot5, lotka_data_sol.t, lotka_data_noisy')
+end
+
 # ╔═╡ d1897917-14ae-418a-a1b5-e7d47e58a8dd
 md"""
 This optimizer got much closer! In fact, if we didn't have noise in the data it recovers the exact parameters:
@@ -931,6 +937,12 @@ md"""
 We see that even the global optimization does not recover the correct parameters anymore, but it does give a solution that does exactly what we asked for:
 """
 
+# ╔═╡ e662f173-84ad-438e-afe8-a1e1e82d38c6
+begin
+	plot7 = plot(lotka_prediction(local_paramestopt_partial_sol.u, saveat = ()))
+	scatter!(plot7, lotka_data_sol.t, lotka_data')
+end
+
 # ╔═╡ f9ac099c-8fc8-45b4-b0b6-6e47985a5880
 md"""
 We see that we got the right parameters! That's basically changing things about `y` also changes things about `x` in a way that is uniquely defined, and thus data about the timeseries of `x` is sufficient to understand the full system.
@@ -953,21 +965,6 @@ But... then what's left? Well, what we saw a little bit in this lecture is that 
 
 There are many questions as to how to take the basic template here and "do it better". That's the rest of the workshop.
 """
-
-# ╔═╡ e662f173-84ad-438e-afe8-a1e1e82d38c6
-begin
-	plot5 = plot(lotka_prediction(local_paramestopt_partial_sol.u, saveat = ()))
-	scatter!(plot5, lotka_data_sol.t, lotka_data')
-end
-
-# ╔═╡ 764b48c6-8427-4e1d-8ec7-59126a020e71
-# ╠═╡ disabled = true
-#=╠═╡
-begin
-	plot5 = plot(lotka_prediction(bboparamest_sol.u, saveat = ()))
-	scatter!(plot5, lotka_data_sol.t, lotka_data_noisy')
-end
-  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
