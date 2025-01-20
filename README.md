@@ -4,7 +4,7 @@ This is a collection of lecture notes from the [Gelio Winter School 2025 on Solv
 
 ## Table of Contents
 
-* [Lecture 1: Introduction to Solving Inverse Problems with Julia](https://github.com/SciML/GeiloInverseProblemWorkshop/blob/main/Lecture1_Solving_Inverse_Problems_in_Julia.jl)
+* [Lecture 1: Introduction to Solving Inverse Problems with Julia](https://github.com/SciML/GeiloInverseProblemWorkshop/blob/main/Lecture1_Solving_Inverse_Problems_in_Julia.jl) [HTML](https://sciml.github.io/GeiloInverseProblemWorkshop/Lecture1_Solving_Inverse_Problems_in_Julia)
 
 ## Using Pluto Notebooks
 
