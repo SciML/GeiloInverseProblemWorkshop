@@ -1,0 +1,564 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Differentiation of Loss Functions Containing ODE Definitions
+\end_layout
+
+\begin_layout Standard
+Why do we need to caculate the derivative of the simulator?
+\end_layout
+
+\begin_layout Standard
+Let's assume that 
+\begin_inset Formula $S(p)$
+\end_inset
+
+ is the solution to the simulator given parameters 
+\begin_inset Formula $p.$
+\end_inset
+
+ And let's assume that we are solving the inverse problem by minimizing
+ a cost function 
+\begin_inset Formula $C(p)=\Vert S(p)-d\Vert$
+\end_inset
+
+.
+ Question: what is 
+\begin_inset Formula $\frac{dC}{dp}$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $C(p)=\sum_{i=1}^{n}(S(p)_{i}-d_{i})^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\frac{dC}{dp}=\sum_{i=1}^{n}2(S(p)_{i}-d_{i})\frac{dS_{i}}{dp}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\frac{dS}{dp}$
+\end_inset
+
+ is the change in the simulation output when changing your parameters.
+\end_layout
+
+\begin_layout Section
+Forward Sensitivity Analysis
+\end_layout
+
+\begin_layout Subsection
+Forward Sensitivity Analysis of an ODE
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\frac{du(t,p)}{dt}=f(u(t,p),p,t)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Differentiate both sides by 
+\begin_inset Formula $p$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\frac{d}{dt}\frac{du}{dp}=\frac{d}{dp}\frac{du(t,p)}{dt}=\frac{d}{dp}f(u(t,p),p,t)=\frac{\partial f}{\partial u}\frac{du}{dp}+\frac{\partial f}{\partial p}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now let's let 
+\begin_inset Formula $s=sensitivty=\frac{du(t,p)}{dp}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\frac{ds}{dt}=s'=\frac{\partial f(u(t,p),p,t)}{\partial u}s+\frac{\partial f(u(t,p),p,t)}{\partial p}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+u' & =f(u,p,t)\\
+s' & =\frac{\partial f}{\partial u}s+\frac{\partial f}{\partial p}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+System of differential equations known as the forward sensitivity equation.
+\end_layout
+
+\begin_layout Standard
+For this to be an ODE, you need 
+\begin_inset Formula $s(0)$
+\end_inset
+
+.
+ What is 
+\begin_inset Formula $s(0)$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $s(0)=\frac{du(0,p)}{dp}=$
+\end_inset
+
+the derivative of the initial conditions w.r.t.
+ the parameters.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\frac{d}{dt}\frac{dx}{d\alpha}=\frac{\partial f_{1}}{\partial x}\frac{dx}{d\alpha}+\frac{\partial f_{1}}{\partial\alpha}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Take an ODE system of size 
+\begin_inset Formula $n$
+\end_inset
+
+ with 
+\begin_inset Formula $p$
+\end_inset
+
+ parameters, and turn it into a new ODE of size 
+\begin_inset Formula $(n+1)p$
+\end_inset
+
+, what you get is a time series 
+\begin_inset Formula $\frac{du(t)}{dp}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Downsides? Cost 
+\begin_inset Formula $\mathcal{O}(np)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Question: can you do this in 
+\begin_inset Formula $\mathcal{O}(n+p)$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Subsection
+Forward Sensitivity Analysis of Nonlinear Solving
+\end_layout
+
+\begin_layout Standard
+So assume you have a nonlinear system:
+\end_layout
+
+\begin_layout Standard
+Solve for 
+\begin_inset Formula $u^{\ast}(p)$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $f(u^{\ast}(p),p)=0$
+\end_inset
+
+.
+ So by definition:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+f(u^{\ast}(p),p) & =0\\
+\frac{d}{dp} & f(u^{\ast}(p),p)=0\\
+\frac{\partial f}{\partial u} & \frac{du^{\ast}}{dp}+\frac{\partial f}{\partial p}=0\\
+Ax & =b
+\end{align*}
+
+\end_inset
+
+ where 
+\begin_inset Formula $b=-\frac{\partial f}{\partial p}$
+\end_inset
+
+, 
+\begin_inset Formula $A=\frac{\partial f}{\partial u}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+so then 
+\begin_inset Formula $\frac{du^{\ast}}{dp}=-\frac{\partial f}{\partial u}^{-1}\vert_{u^{\ast}}\frac{\partial f}{\partial p}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $A(p)x=b$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\frac{dx}{dp}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $S(p)$
+\end_inset
+
+ be the solution to solving an optimization problem with parameters 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ What is 
+\begin_inset Formula $\frac{dS}{dp}$
+\end_inset
+
+? 
+\end_layout
+
+\begin_layout Section
+What is Forward-Mode Automatic Differentiation?
+\end_layout
+
+\begin_layout Standard
+So forward mode automatic differentiation is a scheme for computing derivatives
+ via dual number arithmatic.
+ (Some formulations of forward mode AD do not use dual numbers, though this
+ is equivalent to forms via computational graphs).
+\end_layout
+
+\begin_layout Standard
+Definition: a dual number is a number 
+\begin_inset Formula $d=x+y\epsilon$
+\end_inset
+
+ (where 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ is a dimensional signifier, 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+, 
+\begin_inset Formula $x$
+\end_inset
+
+ is known as the primal and 
+\begin_inset Formula $y$
+\end_inset
+
+ is the partial) which satisfies the algebra defined by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+f(d) & =f(x)+yf'(x)\epsilon\\
+\epsilon^{2} & =0
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Think of 
+\begin_inset Formula $x$
+\end_inset
+
+ as 
+\begin_inset Quotes eld
+\end_inset
+
+carrying forward the original value
+\begin_inset Quotes erd
+\end_inset
+
+, and 
+\begin_inset Formula $y$
+\end_inset
+
+ as 
+\begin_inset Quotes eld
+\end_inset
+
+the derivative of the program w.r.t.
+ 
+\begin_inset Formula $x$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Let's check:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $f(x+1\epsilon)=f(x)+f'(x)\epsilon$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+(x+y\epsilon)+(v+w\epsilon) & =(x+v)+(y+w)\epsilon\\
+(x+y\epsilon)(v+w\epsilon) & =xv+(yv+wx)\epsilon
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $g(f(d))=g(f(x)+yf'(x)\epsilon)=g(f(x))+g'(f(x))f'(x)y\epsilon$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Vert d\Vert=\Vert x\Vert$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\Vert d\Vert=\Vert x\Vert+\Vert y\Vert$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+What does automatic differentiation do to complex codes, like a solver for
+ an ordinary differential equation?
+\end_layout
+
+\begin_layout Standard
+Let's figure out why the freaky magic works by using Euler's method:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u'=f(u)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We solve this via the iteration:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+u_{n+1} & =u_{n}+hf(u_{n})\\
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now let 
+\begin_inset Formula $u_{n}=x_{n}+y_{n}\epsilon$
+\end_inset
+
+.
+ Plug it in:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+x_{n+1}+y_{n+1}\epsilon & =x_{n}+y_{n}\epsilon+hf(x_{n}+y_{n}\epsilon,)\\
+x_{n+1}+y_{n+1}\epsilon & =x_{n}+y_{n}\epsilon+h(f(x_{n})+y_{n}f'(x_{n})\epsilon)
+\end{align*}
+
+\end_inset
+
+ now I split by taking the terms with and without epsilon:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+x_{n+1} & =x_{n}+hf(x_{n})\\
+y_{n+1} & =y_{n}+hy_{n}f'(x_{n})
+\end{align*}
+
+\end_inset
+
+ now let 
+\begin_inset Formula $h\rightarrow0$
+\end_inset
+
+, then this is Euler's method for solving what ODE?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+x' & =f(x)\\
+y' & =f'(x)y
+\end{align*}
+
+\end_inset
+
+ Let's change notation: 
+\begin_inset Formula $x=u$
+\end_inset
+
+, 
+\begin_inset Formula $y=s$
+\end_inset
+
+ then...
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+u' & =f(u)\\
+s' & =\frac{\partial f}{\partial u}s
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

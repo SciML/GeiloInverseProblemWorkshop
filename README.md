@@ -9,6 +9,7 @@ This is a collection of lecture notes from the [Gelio Winter School 2025 on Solv
     * Supplement: [The Numerical Analysis of Differentiable Simulation](https://docs.google.com/presentation/d/1fdloIWQx6i6IIVgzpHzeO-5jNseMN5jCyKfyYidAiMk/edit#slide=id.g2cd5a5f19a8_2_169)
     * Supplement 2: [Forward-Mode Automatic Differentiation (AD) via High Dimensional Algebras](https://book.sciml.ai/notes/08-Forward-Mode_Automatic_Differentiation_(AD)_via_High_Dimensional_Algebras/)
     * Supplement 3: [Differentiable Programming and Neural Differential Equations](https://book.sciml.ai/notes/11-Differentiable_Programming_and_Neural_Differential_Equations/)
+* [Lecture 4: Functional Inverse Problems, Scientific Machine Learning, and Differentiation in the Real World](https://docs.google.com/presentation/d/1Ksdyp_Cs5fzCk3re4I1thFrWcH1fxSYBT2MxET4xtpo/edit?usp=sharing)
 
 ## Using Pluto Notebooks
 
